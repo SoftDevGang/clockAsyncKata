@@ -10,7 +10,7 @@ public class ClockTest {
 
 	@Test
 	public void workingClockIn() throws ExecutionException, InterruptedException {
-		Client client = new Client(new FakeServer(false));
+		Client client = new Client((__, ___) -> true);
 
 		Boolean isSuccessful = client.clockIn("Steve", "5:45");
 
@@ -19,7 +19,7 @@ public class ClockTest {
 
 	@Test
 	public void slowClockIn() throws ExecutionException, InterruptedException, TimeoutException {
-		Client client = new Client(new FakeServer(true));
+		Client client = new Client((__, ___) -> false);
 
 		Boolean isSuccessful = client.clockIn("Steve", "5:45");
 
