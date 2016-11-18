@@ -37,4 +37,15 @@ public class ClockTest {
 
 		assertFalse(isSuccessful);
 	}
+
+	@Test
+	public void exceptionInClockIn() throws ExecutionException, InterruptedException, TimeoutException {
+		Client client = new Client((__, ___) -> {
+			throw new Error();
+		});
+
+		Boolean isSuccessful = client.clockIn("Steve", "5:45");
+
+		assertFalse(isSuccessful);
+	}
 }

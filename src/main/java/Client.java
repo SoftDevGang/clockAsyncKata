@@ -1,5 +1,7 @@
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 public class Client {
 
@@ -19,7 +21,9 @@ public class Client {
 		CompletableFuture<Boolean> success = clockInAsync(userName, timestamp);
 		try {
 			return success.get(10, TimeUnit.MILLISECONDS);
-		} catch (Exception e) {
+		} catch (TimeoutException |
+				InterruptedException |
+				ExecutionException e) {
 			return false;
 		}
 	}
