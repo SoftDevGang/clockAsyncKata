@@ -7,26 +7,8 @@ import static org.junit.Assert.assertTrue;
 
 public class ClockTest {
 
-	/*
-	Given:
-Server is in good condition
-
-When:
-Steve clocks in at 5:45
-
-Then:
-Receives acknowledgment he was clocked in at 5:45
-	*/
-
-//	@Test
-//	public void something() {
-//		boolean success = clockIn("Steve", "5:45");
-//
-//		assertTrue(success);
-//	}
-
 	@Test
-	public void somethingElse() throws ExecutionException, InterruptedException {
+	public void workingClockIn() throws ExecutionException, InterruptedException {
 		CompletableFuture<Boolean> success = clockInAsync("Steve", "5:45");
 
 		assertTrue(success.get());
@@ -40,8 +22,4 @@ Receives acknowledgment he was clocked in at 5:45
 		return true;
 	}
 
-	private boolean clockIn(String userName, String timestamp) {
-
-		return false;
-	}
 }
