@@ -1,5 +1,6 @@
 import org.junit.Test;
 
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
@@ -35,6 +36,18 @@ public class ClockTest {
 		String isSuccessful = client.clockIn("Steve", "5:45");
 
 		assertEquals("Failure", isSuccessful);
+	}
+
+	@Test
+	public void timeOutAsyncWrapper() throws ExecutionException, InterruptedException, TimeoutException {
+		Client client = new Client((__, ___) -> {
+			while (true) {
+			}
+		});
+
+		CompletableFuture<String> successful = client.clockInWithTimeout("Steve", "5:45");
+
+		assertEquals("Failure", successful.get());
 	}
 
 	@Test

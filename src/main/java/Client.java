@@ -27,4 +27,8 @@ public class Client {
 			return "Failure";
 		}
 	}
+
+	public CompletableFuture<String> clockInWithTimeout(String userName, String timestamp) {
+		return CompletableFuture.supplyAsync(() -> this.clockIn(userName, timestamp));
+	}
 }
