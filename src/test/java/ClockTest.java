@@ -51,6 +51,36 @@ public class ClockTest {
 	}
 
 	@Test
+	public void noBlocking() throws ExecutionException, InterruptedException, TimeoutException {
+		Client client = new Client((__, ___) -> {
+			while (true) {
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					System.out.println("Call: Interrupted");
+				}
+				System.out.println(".");
+			}
+		});
+
+		CompletableFuture<String> successful = client.clockInWithTimeout("Steve", "5:45");
+
+		System.out.println("Doing more stuff");
+
+		successful.whenComplete((s, throwable) -> {
+			try {
+				System.out.println("Done");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
+
+		Thread.sleep(10000);
+
+		assertEquals("Failure", successful.get());
+	}
+
+	@Test
 	public void exceptionInClockIn() throws ExecutionException, InterruptedException, TimeoutException {
 		Client client = new Client((__, ___) -> {
 			throw new Error();

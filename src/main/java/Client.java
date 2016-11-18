@@ -24,11 +24,24 @@ public class Client {
 		} catch (TimeoutException |
 				InterruptedException |
 				ExecutionException e) {
+			success.cancel(true);
+			try {
+				success.get();
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			} catch (ExecutionException e1) {
+				e1.printStackTrace();
+			}
+			System.out.println("Canceled");
 			return "Failure";
 		}
 	}
 
 	public CompletableFuture<String> clockInWithTimeout(String userName, String timestamp) {
 		return CompletableFuture.supplyAsync(() -> this.clockIn(userName, timestamp));
+
+		// 1. What we'd like to have is setting timeout on the method like this:
+		// return clockInAsync(userName, timestamp).setTimeout(10, "Failure");
+		// 2. What do we need to implement to cancel the CompletableFuture?
 	}
 }
