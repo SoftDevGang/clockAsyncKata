@@ -1,0 +1,10 @@
+# Gradle
+.gradle
+build/
+
+# Gradle GUI config
+gradle-app.setting
+
+# IDEA
+.idea
+*.iml
