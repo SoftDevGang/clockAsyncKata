@@ -1,4 +1,5 @@
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 
 public class Client {
 
@@ -12,5 +13,14 @@ public class Client {
 		return CompletableFuture.supplyAsync(
 				() -> server.recordTime(userName, timestamp)
 		);
+	}
+
+	public Boolean clockIn(String userName, String timestamp) {
+		CompletableFuture<Boolean> success = clockInAsync(userName, timestamp);
+		try {
+			return success.get(10, TimeUnit.MILLISECONDS);
+		} catch (Exception e) {
+			return false;
+		}
 	}
 }
