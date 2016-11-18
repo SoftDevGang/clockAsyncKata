@@ -1,3 +1,5 @@
 public interface Server {
-	String recordTime(String userName, String timestamp);
+
+    String recordTime(String userName, String timestamp);
+
 }
