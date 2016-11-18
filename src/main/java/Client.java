@@ -9,6 +9,8 @@ public class Client {
 	}
 
 	public CompletableFuture<Boolean> clockInAsync(String userName, String timestamp) {
-		return CompletableFuture.supplyAsync(() -> server.recordTime(userName, timestamp));
+		return CompletableFuture.supplyAsync(
+				() -> server.recordTime(userName, timestamp)
+		);
 	}
 }
