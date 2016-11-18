@@ -22,15 +22,9 @@ public class Client {
                 InterruptedException |
                 ExecutionException e) {
 
-            // TODO we want to cancel the while loop on running future. 2nd try - cancel and get
+            // TODO we want to cancel the while loop on running future. cancel
             System.out.println("Canceled");
             success.cancel(true);
-
-            try {
-                success.get();
-            } catch (InterruptedException | ExecutionException ex) {
-                e.printStackTrace();
-            }
 
             return "Failure";
         }
