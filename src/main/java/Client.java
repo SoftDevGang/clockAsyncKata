@@ -11,20 +11,20 @@ public class Client {
 		this.server = server;
 	}
 
-	public CompletableFuture<Boolean> clockInAsync(String userName, String timestamp) {
+	public CompletableFuture<String> clockInAsync(String userName, String timestamp) {
 		return CompletableFuture.supplyAsync(
 				() -> server.recordTime(userName, timestamp)
 		);
 	}
 
-	public Boolean clockIn(String userName, String timestamp) {
-		CompletableFuture<Boolean> success = clockInAsync(userName, timestamp);
+	public String clockIn(String userName, String timestamp) {
+		CompletableFuture<String> success = clockInAsync(userName, timestamp);
 		try {
 			return success.get(10, TimeUnit.MILLISECONDS);
 		} catch (TimeoutException |
 				InterruptedException |
 				ExecutionException e) {
-			return false;
+			return "Failure";
 		}
 	}
 }

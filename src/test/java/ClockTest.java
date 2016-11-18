@@ -3,27 +3,26 @@ import org.junit.Test;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 public class ClockTest {
 
 	@Test
 	public void workingClockIn() throws ExecutionException, InterruptedException {
-		Client client = new Client((__, ___) -> true);
+		Client client = new Client((__, ___) -> "OK");
 
-		Boolean isSuccessful = client.clockIn("Steve", "5:45");
+		String isSuccessful = client.clockIn("Steve", "5:45");
 
-		assertTrue(isSuccessful);
+		assertEquals("OK", isSuccessful);
 	}
 
 	@Test
 	public void slowClockIn() throws ExecutionException, InterruptedException, TimeoutException {
-		Client client = new Client((__, ___) -> false);
+		Client client = new Client((__, ___) -> "Failure");
 
-		Boolean isSuccessful = client.clockIn("Steve", "5:45");
+		String isSuccessful = client.clockIn("Steve", "5:45");
 
-		assertFalse(isSuccessful);
+		assertEquals("Failure", isSuccessful);
 	}
 
 	@Test
@@ -33,9 +32,9 @@ public class ClockTest {
 			}
 		});
 
-		Boolean isSuccessful = client.clockIn("Steve", "5:45");
+		String isSuccessful = client.clockIn("Steve", "5:45");
 
-		assertFalse(isSuccessful);
+		assertEquals("Failure", isSuccessful);
 	}
 
 	@Test
@@ -44,8 +43,8 @@ public class ClockTest {
 			throw new Error();
 		});
 
-		Boolean isSuccessful = client.clockIn("Steve", "5:45");
+		String isSuccessful = client.clockIn("Steve", "5:45");
 
-		assertFalse(isSuccessful);
+		assertEquals("Failure", isSuccessful);
 	}
 }
